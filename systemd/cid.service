@@ -1,0 +1,17 @@
+[Unit]
+Description=Sistemler CID V6 Hardware Daemon
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/cid-listener
+Restart=always
+RestartSec=5
+User=root
+# We run as root to ensure raw HID access, though udev rules are safer. #TODO: ADD DEDICATED USER
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=sistemler-cid
+
+[Install]
+WantedBy=multi-user.target
