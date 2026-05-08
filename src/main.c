@@ -4,9 +4,8 @@
 #include <hidapi/hidapi.h>
 #include "demux.h"
 
-// --- CHANGE THESE TO MATCH YOUR LSUSB OUTPUT ---
-#define VENDOR_ID  0x0483
-#define PRODUCT_ID 0x5750
+#define VENDOR_ID  0x16d0
+#define PRODUCT_ID 0x0787
 
 #define REPORT_SIZE 65 // 64 bytes payload + 1 byte Report ID
 
