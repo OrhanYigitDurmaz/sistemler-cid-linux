@@ -1,9 +1,9 @@
 CC = gcc
-CFLAGS = -Wall -O2
-LIBS = -lhidapi-hidraw
+CFLAGS = -Wall -O2 $(shell pkg-config --cflags spandsp)
+LIBS = -lhidapi-hidraw $(shell pkg-config --libs spandsp) -lm
 
 TARGET = cid-listener
-SRC = src/main.c src/demux.c
+SRC = src/main.c src/demux.c src/fsk.c
 
 all: $(TARGET)
 
