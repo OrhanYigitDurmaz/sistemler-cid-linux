@@ -1,7 +1,7 @@
 Source: cid-listener
 Section: comm
 Priority: optional
-Maintainer: Orhan Yiğit Durmaz <orhan@local>
+Maintainer: Orhan Yiğit Durmaz <orhan@orhandurmaz.dev>
 Build-Depends: debhelper-compat (= 13), libhidapi-dev, libspandsp-dev, pkg-config
 Standards-Version: 4.6.2
 Homepage: https://github.com/orhanyigit/sistemler-cid-linux
