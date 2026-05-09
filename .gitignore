@@ -1,5 +1,5 @@
 # Compiled binary
-scid
+cidv6d
 
 # Debian packaging
 *.deb
@@ -8,6 +8,6 @@ scid
 *.dsc
 *.tar.gz
 debian/*.debhelper.log
-debian/scid/
+debian/cidv6d/
 debian/debhelper-build-stamp
 debian/files

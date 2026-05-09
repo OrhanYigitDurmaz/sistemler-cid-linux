@@ -1,4 +1,4 @@
-scid (0.1.0-1) unstable; urgency=medium
+cidv6d (0.1.0-1) unstable; urgency=medium
 
   * Initial release
   * Support for Sistemler CID V6 USB device (16d0:0787)

@@ -1,4 +1,4 @@
-Source: scid
+Source: cidv6d
 Section: comm
 Priority: optional
 Maintainer: Orhan Yiğit Durmaz <orhan@orhandurmaz.dev>
@@ -8,10 +8,10 @@ Homepage: https://github.com/orhanyigit/sistemler-cid-linux
 Vcs-Git: https://github.com/orhanyigit/sistemler-cid-linux.git
 Vcs-Browser: https://github.com/orhanyigit/sistemler-cid-linux
 
-Package: scid
+Package: cidv6d
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Sistemler CID V6 listener
+Description: Sistemler CID V6 daemon
  Userspace driver for the Sistemler CID V6 USB Caller ID device.
  Monitors all 4 analog phone lines and emits Caller ID data as JSON.
  .
