@@ -1,0 +1,90 @@
+name: Build Debian Package
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-deb:
+    runs-on: ubuntu-latest
+    container: debian:sid
+
+    steps:
+    - name: Install build dependencies
+      run: |
+        apt-get update
+        apt-get install -y \
+          build-essential \
+          debhelper \
+          devscripts \
+          libhidapi-dev \
+          libspandsp-dev \
+          pkg-config
+
+    - name: Checkout source
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Import GPG key
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+      run: |
+        echo -n "${{ secrets.GPG_PASSPHRASE }}" > /tmp/gpg-passphrase
+        chmod 600 /tmp/gpg-passphrase
+        echo -n "${{ secrets.GPG_PRIVATE_KEY }}" | base64 -d \
+          | gpg --batch --yes --passphrase-file /tmp/gpg-passphrase \
+            --pinentry-mode loopback --import
+
+    - name: Build package
+      env:
+        DEBEMAIL: ci@github-actions
+        DEBFULLNAME: CI Build
+      run: |
+        # Version from git tag or timestamp
+        if echo "$GITHUB_REF" | grep -q '^refs/tags/'; then
+          VERSION=${GITHUB_REF_NAME#v}
+        else
+          VERSION="0.1.0-$(date +%Y%m%d%H%M%S)"
+        fi
+
+        # Update changelog for version
+        dch -v "$VERSION" "Automated build" -D unstable
+
+        # Build the package (binary-only, no signing)
+        dpkg-buildpackage -us -uc -b
+
+    - name: Sign package (for tags)
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+      env:
+        GPGOPTS: "--batch --passphrase-file /tmp/gpg-passphrase --pinentry-mode loopback"
+      run: |
+        debsign -k "${{ secrets.GPG_KEY_ID }}" ../*.changes
+
+    - name: Rename artifacts
+      run: |
+        mkdir -p artifacts
+        cp ../*.deb artifacts/
+        cp ../*.changes artifacts/ 2>/dev/null || true
+        ls -la artifacts/
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: debian-packages
+        path: artifacts/*
+        retention-days: 30
+
+    - name: Create Release
+      if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: artifacts/*
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
