@@ -57,7 +57,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: scid-packages
+          name: cidv6d-packages
           path: artifacts/*
           retention-days: 30
 
