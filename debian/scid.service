@@ -1,0 +1,23 @@
+[Unit]
+Description=Sistemler CID V6 Listener
+Documentation=https://github.com/orhanyigit/sistemler-cid-linux
+After=network.target
+ConditionPathIsExecutable=/usr/local/bin/scid
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/scid --json
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+# Security hardening
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/run/scid.sock
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
