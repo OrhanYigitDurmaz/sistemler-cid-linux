@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+
+# Remove the cidv6d system group on purge
+if [ "$1" = "purge" ]; then
+    if getent group cidv6d > /dev/null; then
+        groupdel cidv6d || true
+    fi
+fi
+
+#DEBHELPER#

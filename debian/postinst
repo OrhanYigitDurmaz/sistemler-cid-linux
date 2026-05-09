@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+
+# Create the cidv6d system group if it doesn't exist
+if ! getent group cidv6d > /dev/null; then
+    groupadd --system cidv6d
+fi
+
+#DEBHELPER#

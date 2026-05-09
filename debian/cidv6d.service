@@ -6,6 +6,7 @@ After=network.target
 [Service]
 Type=simple
 ExecStart=/usr/bin/cidv6d --json
+Group=cidv6d
 Restart=always
 RestartSec=5
 StandardOutput=journal
