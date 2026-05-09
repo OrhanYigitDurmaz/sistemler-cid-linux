@@ -2,7 +2,7 @@ CC ?= gcc
 CFLAGS = -Wall -O2 -I/usr/include/spandsp
 LIBS = -lhidapi-hidraw -lspandsp -lm
 
-TARGET = cid-listener
+TARGET = scid
 SRC = src/main.c src/demux.c src/fsk.c
 
 PREFIX ?= /usr/local

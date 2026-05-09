@@ -1,5 +1,5 @@
 # Compiled binary
-cid-listener
+scid
 
 # Debian packaging
 *.deb
@@ -8,6 +8,6 @@ cid-listener
 *.dsc
 *.tar.gz
 debian/*.debhelper.log
-debian/cid-listener/
+debian/scid/
 debian/debhelper-build-stamp
 debian/files

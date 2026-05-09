@@ -57,7 +57,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: debian-packages
+          name: scid-packages
           path: artifacts/*
           retention-days: 30
 
