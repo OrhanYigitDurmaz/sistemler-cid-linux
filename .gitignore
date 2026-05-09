@@ -1,1 +1,13 @@
+# Compiled binary
 cid-listener
+
+# Debian packaging
+*.deb
+*.changes
+*.buildinfo
+*.dsc
+*.tar.gz
+debian/*.debhelper.log
+debian/cid-listener/
+debian/debhelper-build-stamp
+debian/files
