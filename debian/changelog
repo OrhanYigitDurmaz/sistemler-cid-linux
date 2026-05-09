@@ -1,0 +1,9 @@
+cid-listener (0.1.0-1) unstable; urgency=medium
+
+  * Initial release
+  * Support for Sistemler CID V6 USB device (16d0:0787)
+  * 4-line simultaneous monitoring with FSK demodulation
+  * JSON output mode for easy integration
+  * systemd service for auto-start
+
+ -- Orhan Yiğit Durmaz <orhan@local>  Fri, 09 May 2026 02:00:00 +0300

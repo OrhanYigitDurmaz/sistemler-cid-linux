@@ -1,0 +1,11 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	$(MAKE) CFLAGS="$(CFLAGS) $(CPPFLAGS)" LDFLAGS="$(LDFLAGS)"
+
+override_dh_auto_install:
+	$(MAKE) install DESTDIR=debian/cid-listener PREFIX=/usr
+	install -D -m 644 debian/cid-listener.service debian/cid-listener/lib/systemd/system/cid-listener.service

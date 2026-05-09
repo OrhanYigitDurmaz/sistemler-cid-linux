@@ -1,0 +1,22 @@
+Source: cid-listener
+Section: comm
+Priority: optional
+Maintainer: Orhan Yiğit Durmaz <orhan@local>
+Build-Depends: debhelper-compat (= 13), libhidapi-dev, libspandsp-dev, pkg-config
+Standards-Version: 4.6.2
+Homepage: https://github.com/orhanyigit/sistemler-cid-linux
+Vcs-Git: https://github.com/orhanyigit/sistemler-cid-linux.git
+Vcs-Browser: https://github.com/orhanyigit/sistemler-cid-linux
+
+Package: cid-listener
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Caller ID driver for Sistemler CID V6 device
+ Userspace driver for the Sistemler CID V6 USB Caller ID device.
+ Monitors all 4 analog phone lines and emits Caller ID data as JSON.
+ .
+ Features:
+  - Supports all 4 phone lines simultaneously
+  - European V.23 FSK demodulation (ETSI CLIP)
+  - JSON output for easy integration
+  - Raw audio capture option
