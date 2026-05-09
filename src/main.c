@@ -6,7 +6,9 @@
 #include <time.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <grp.h>
 #include <sys/socket.h>
+#include <sys/stat.h>
 #include <sys/un.h>
 #include <poll.h>
 #include <hidapi/hidapi.h>
@@ -17,7 +19,8 @@
 #define PRODUCT_ID 0x0787
 
 #define PACKET_SIZE 64 // Device sends exactly 64 bytes, no Report ID
-#define SOCKET_PATH "/run/cid-listener.sock"
+#define SOCKET_PATH "/run/cidv6d.sock"
+#define SOCKET_GROUP "cidv6d"
 #define MAX_CLIENTS 32
 
 volatile int keep_running = 1;
@@ -54,6 +57,21 @@ static int init_socket(void) {
         perror("bind");
         close(fd);
         return -1;
+    }
+
+    // Set socket permissions: 0660 (owner and group can read/write)
+    chmod(SOCKET_PATH, 0660);
+
+    // Set socket group ownership to "cidv6d"
+    struct group *grp = getgrnam(SOCKET_GROUP);
+    if (grp) {
+        if (chown(SOCKET_PATH, -1, grp->gr_gid) < 0) {
+            perror("chown");
+            // Continue anyway, group might not exist yet
+        }
+    } else {
+        // Group doesn't exist, will be created by postinst
+        fprintf(stderr, "[!] Warning: Group '" SOCKET_GROUP "' not found. Socket will not be group-writable.\n");
     }
 
     if (listen(fd, SOMAXCONN) < 0) {
