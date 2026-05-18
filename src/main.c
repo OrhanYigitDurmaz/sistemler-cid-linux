@@ -4,7 +4,6 @@
 #include <signal.h>
 #include <string.h>
 #include <time.h>
-#include <errno.h>
 #include <fcntl.h>
 #include <grp.h>
 #include <sys/socket.h>
